@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { StarRating } from "@/components/ui/star-rating";
-import { getDoctorById } from "@wadud/mocks/src/doctors";
+import { getDoctorById } from "@wadud/mocks";
 import { formatCurrency, getSpecializationLabel } from "@/lib/utils";
 
 const COUNTRY_LABELS: Record<string, string> = {

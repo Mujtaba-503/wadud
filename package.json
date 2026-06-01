@@ -1,0 +1,35 @@
+{
+  "name": "wadud",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Wadud — Al Wadud Telemedicine Platform",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "type-check": "turbo type-check",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "dev:web": "turbo dev --filter=@wadud/web",
+    "dev:admin": "turbo dev --filter=@wadud/admin",
+    "build:web": "turbo build --filter=@wadud/web",
+    "build:admin": "turbo build --filter=@wadud/admin"
+  },
+  "devDependencies": {
+    "prettier": "^3.4.2",
+    "turbo": "^2.3.3",
+    "typescript": "^5.7.3"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "packageManager": "npm@10.0.0",
+  "dependencies": {
+    "@tailwindcss/vite": "^4.3.0",
+    "tailwindcss": "^4.3.0",
+    "tailwindcss-animate": "^1.0.7"
+  }
+}

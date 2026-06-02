@@ -4,3 +4,4 @@ export * from "./consultations";
 export * from "./messages";
 export * from "./notifications";
 export * from "./reviews";
+export * from "./admin";

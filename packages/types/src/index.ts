@@ -522,6 +522,47 @@ export interface ChartData {
   newDoctors: TimeSeriesDataPoint[];
 }
 
+// ─── System Logs (Admin) ──────────────────────────────────────
+
+export type SystemLogLevel = "info" | "warning" | "error" | "critical";
+
+export interface SystemLog {
+  id: UUID;
+  level: SystemLogLevel;
+  category: "auth" | "payment" | "consultation" | "system" | "security" | "api";
+  message: string;
+  actor?: string; // user/service that triggered the event
+  ip?: string;
+  createdAt: ISO8601;
+}
+
+// ─── Content Moderation (Admin) ───────────────────────────────
+
+export type ModerationStatus = "pending" | "approved" | "removed" | "escalated";
+
+export interface ContentModerationItem {
+  id: UUID;
+  type: "review" | "chat_message" | "doctor_bio" | "profile";
+  reportedContent: string;
+  reason: string;
+  reportedBy?: string;
+  authorName: string;
+  status: ModerationStatus;
+  createdAt: ISO8601;
+}
+
+// ─── Doctor Portal: Earnings ──────────────────────────────────
+
+export interface DoctorEarningsSummary {
+  totalEarnings: number;
+  pendingPayout: number;
+  thisMonth: number;
+  lastMonth: number;
+  currency: CurrencyCode;
+  consultationsThisMonth: number;
+  averagePerConsultation: number;
+}
+
 // ─── Filters ─────────────────────────────────────────────────
 
 export interface DoctorFilters {

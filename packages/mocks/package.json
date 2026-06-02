@@ -11,7 +11,8 @@
     "./consultations": "./src/consultations.ts",
     "./messages": "./src/messages.ts",
     "./notifications": "./src/notifications.ts",
-    "./reviews": "./src/reviews.ts"
+    "./reviews": "./src/reviews.ts",
+    "./admin": "./src/admin.ts"
   },
   "dependencies": {
     "@wadud/types": "*"

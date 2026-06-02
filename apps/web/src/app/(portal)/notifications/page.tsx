@@ -114,7 +114,7 @@ export default function NotificationsCenterPage() {
                     <span className="h-2 w-2 rounded-full bg-primary shrink-0" />
                   )}
                 </div>
-                <p className="text-xs text-muted-foreground leading-normal">{n.content}</p>
+                <p className="text-xs text-muted-foreground leading-normal">{n.body}</p>
                 <span className="text-[10px] text-muted-foreground/60 block pt-0.5">
                   {new Date(n.createdAt).toLocaleDateString("en", {
                     month: "short",

@@ -31,7 +31,7 @@ export default function ConsultationDetailPage({ params }: { params: Promise<{ i
   if (!doctor) return null;
 
   const initials = `${doctor.firstName[0]}${doctor.lastName[0]}`;
-  const startTime = new Date(consultation.startTime);
+  const startTime = new Date(consultation.scheduledAt);
 
   const handleDownload = () => {
     toast.success("Download Started", {
@@ -100,7 +100,7 @@ export default function ConsultationDetailPage({ params }: { params: Promise<{ i
                 Clinical Diagnosis Notes
               </h3>
               <div className="bg-muted/30 border border-border p-5 rounded-xl text-sm leading-relaxed text-muted-foreground">
-                {consultation.notes?.diagnosis || "No specific diagnosis logged for this session."}
+                {consultation.diagnosis || "No specific diagnosis logged for this session."}
               </div>
             </div>
 
@@ -111,7 +111,7 @@ export default function ConsultationDetailPage({ params }: { params: Promise<{ i
                   <FileText className="h-4.5 w-4.5 text-primary" /> Active Prescription
                 </h3>
                 <div className="border border-border rounded-xl divide-y divide-border overflow-hidden bg-muted/10">
-                  {consultation.prescription.medicines.map((med, idx) => (
+                  {consultation.prescription.medications.map((med, idx) => (
                     <div key={idx} className="p-4 flex justify-between items-center text-xs">
                       <div>
                         <p className="font-bold text-foreground">{med.name}</p>

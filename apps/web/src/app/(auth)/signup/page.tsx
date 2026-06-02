@@ -41,15 +41,7 @@ export default function SignupPage() {
 
   const onSubmit = async (data: SignupFormValues) => {
     try {
-      await signup({
-        user: {
-          firstName: data.firstName,
-          lastName: data.lastName,
-          email: data.email,
-          phone: data.phone,
-          role: "patient",
-        },
-      });
+      await signup({ role: "patient" });
       toast.success("Account Initialized", {
         description: "Please verify your mobile number to complete activation.",
       });

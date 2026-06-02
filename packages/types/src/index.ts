@@ -107,6 +107,7 @@ export interface User {
 // ─── Patient ──────────────────────────────────────────────────
 
 export interface Patient extends User {
+  userId?: UUID;
   dateOfBirth?: DateOnly;
   gender?: Gender;
   bloodType?: BloodType;

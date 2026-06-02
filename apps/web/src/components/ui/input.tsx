@@ -6,10 +6,11 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
   rightIcon?: React.ReactNode;
   error?: string;
   label?: string;
+  description?: string;
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, leftIcon, rightIcon, error, label, id, ...props }, ref) => {
+  ({ className, type, leftIcon, rightIcon, error, label, description, id, ...props }, ref) => {
     return (
       <div className="w-full space-y-1.5">
         {label && (
@@ -39,7 +40,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             )}
             ref={ref}
             aria-invalid={!!error}
-            aria-describedby={error ? `${id}-error` : undefined}
+            aria-describedby={error ? `${id}-error` : description ? `${id}-description` : undefined}
             {...props}
           />
           {rightIcon && (
@@ -48,11 +49,15 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             </div>
           )}
         </div>
-        {error && (
+        {error ? (
           <p id={`${id}-error`} className="text-xs text-destructive flex items-center gap-1">
             {error}
           </p>
-        )}
+        ) : description ? (
+          <p id={`${id}-description`} className="text-xs text-muted-foreground">
+            {description}
+          </p>
+        ) : null}
       </div>
     );
   }

@@ -1,0 +1,9 @@
+# Go build artifacts
+/bin/
+*.exe
+*.out
+/out/
+
+# Local env overrides
+*.env
+.env.local

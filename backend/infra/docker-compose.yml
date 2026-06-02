@@ -1,0 +1,82 @@
+# Wadud backend — local development stack.
+#   docker compose -f backend/infra/docker-compose.yml up -d
+# Brings up Postgres, Redis, NATS, MinIO and the auth-service.
+name: wadud-backend
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: wadud
+      POSTGRES_PASSWORD: wadud
+      POSTGRES_DB: wadud_auth
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U wadud"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  nats:
+    image: nats:2-alpine
+    command: ["-js"]
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+
+  minio:
+    image: minio/minio:latest
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: wadud
+      MINIO_ROOT_PASSWORD: wadud12345
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - miniodata:/data
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  auth-service:
+    build:
+      context: ..
+      dockerfile: infra/docker/auth-service.Dockerfile
+    environment:
+      PORT: "8081"
+      DATABASE_URL: "postgres://wadud:wadud@postgres:5432/wadud_auth?sslmode=disable"
+      REDIS_URL: "redis://redis:6379/0"
+      NATS_URL: "nats://nats:4222"
+      JWT_SECRET: "dev-insecure-secret-change-me"
+      WEB_ORIGIN: "http://localhost:3000"
+      ADMIN_ORIGIN: "http://localhost:3001"
+      DOCTOR_ORIGIN: "http://localhost:3002"
+    ports:
+      - "8081:8081"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      nats:
+        condition: service_started
+
+volumes:
+  pgdata:
+  miniodata:

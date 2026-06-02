@@ -29,7 +29,7 @@ export default function PatientDashboardPage() {
 
   // Get upcoming consultations
   const upcomingConsultations = MOCK_CONSULTATIONS.filter(
-    (c) => c.status === "scheduled" || c.status === "confirmed"
+    (c) => c.status === "pending" || c.status === "confirmed"
   ).slice(0, 2);
 
   // Recommended doctors (verified and available)
@@ -141,7 +141,7 @@ export default function PatientDashboardPage() {
               upcomingConsultations.map((c) => {
                 const doc = MOCK_DOCTORS.find((d) => d.id === c.doctorId);
                 if (!doc) return null;
-                const slotTime = new Date(c.startTime);
+                const slotTime = new Date(c.scheduledAt);
                 return (
                   <div
                     key={c.id}
@@ -157,7 +157,7 @@ export default function PatientDashboardPage() {
                           Dr. {doc.firstName} {doc.lastName}
                         </h4>
                         <p className="text-xs text-muted-foreground">
-                          {getSpecializationLabel(doc.specialization)} &bull; {c.type === "video" ? "Video Consultation" : "Secure Chat"}
+                          {getSpecializationLabel(doc.specialization)} &bull; {c.consultationType === "video" ? "Video Consultation" : "Secure Chat"}
                         </p>
                         <div className="flex items-center gap-1.5 text-xs text-primary font-medium mt-1">
                           <Clock className="h-3.5 w-3.5" />
@@ -175,7 +175,7 @@ export default function PatientDashboardPage() {
                     </div>
 
                     <div className="flex gap-2 w-full sm:w-auto shrink-0">
-                      {c.type === "video" ? (
+                      {c.consultationType === "video" ? (
                         <Link href={`/video/${c.id}`} className="w-full sm:w-auto">
                           <Button size="sm" className="w-full sm:w-auto rounded-lg text-xs h-9 bg-primary text-white flex items-center gap-1">
                             <Video className="h-3.5 w-3.5" /> Start call

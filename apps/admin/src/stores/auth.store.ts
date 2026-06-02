@@ -1,90 +1,77 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { AuthSession, UserRole } from "@wadud/types";
-import { MOCK_DOCTORS } from "@wadud/mocks";
+import type { AuthSession } from "@wadud/types";
+
+/**
+ * Admin portal auth store (mock).
+ * @api POST /api/v1/auth/login   — admin login
+ * @api POST /api/v1/auth/logout
+ * Replace mock session with real JWT flow from the Go auth-service.
+ */
+
+export const CURRENT_ADMIN = {
+  id: "admin-0001",
+  firstName: "Sana",
+  lastName: "Iqbal",
+  email: "sana.iqbal@wadud.app",
+  avatar: undefined as string | undefined,
+};
 
 interface AuthState {
   session: AuthSession | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;
-  login: (email: string, role: UserRole) => Promise<void>;
+  login: (email: string, password: string) => Promise<void>;
   logout: () => void;
-  setSession: (session: AuthSession) => void;
+  clearError: () => void;
 }
 
-// Default session is Dr. Ahmad Al-Rashidi
-const DEFAULT_SESSION: AuthSession = {
+const MOCK_SESSION: AuthSession = {
   user: {
-    id: MOCK_DOCTORS[0].id,
-    firstName: MOCK_DOCTORS[0].firstName,
-    lastName: MOCK_DOCTORS[0].lastName,
-    email: MOCK_DOCTORS[0].email,
-    phone: MOCK_DOCTORS[0].phone || "+971501234567",
-    avatar: MOCK_DOCTORS[0].avatar,
-    role: "doctor",
+    id: CURRENT_ADMIN.id,
+    firstName: CURRENT_ADMIN.firstName,
+    lastName: CURRENT_ADMIN.lastName,
+    email: CURRENT_ADMIN.email,
+    phone: "+923001234567",
+    avatar: CURRENT_ADMIN.avatar,
+    role: "admin",
     isVerified: true,
     isActive: true,
-    country: MOCK_DOCTORS[0].country,
+    country: "PK",
     language: "en",
-    createdAt: MOCK_DOCTORS[0].createdAt,
-    updatedAt: MOCK_DOCTORS[0].updatedAt,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   },
   tokens: {
-    accessToken: "admin-access-token-xyz",
-    refreshToken: "admin-refresh-token-xyz",
+    accessToken: "mock-admin-access-token",
+    refreshToken: "mock-admin-refresh-token",
     expiresAt: new Date(Date.now() + 86400000).toISOString(),
   },
-  role: "doctor",
+  role: "admin",
 };
 
 export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
-      session: DEFAULT_SESSION,
+      session: MOCK_SESSION,
       isAuthenticated: true,
       isLoading: false,
       error: null,
 
-      login: async (email: string, role: UserRole) => {
+      login: async (_email: string, _password: string) => {
         set({ isLoading: true, error: null });
-        await new Promise((r) => setTimeout(r, 1000));
-        
-        let userPayload = DEFAULT_SESSION.user;
-        if (role === "admin") {
-          userPayload = {
-            id: "admin-uuid-1111",
-            firstName: "System",
-            lastName: "Administrator",
-            email: email,
-            phone: "+92 300 0000000",
-            avatar: "https://api.dicebear.com/9.x/personas/svg?seed=AdminSystem",
-            role: "admin",
-            isVerified: true,
-            isActive: true,
-            country: "PK",
-            language: "en",
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-          };
-        }
-
-        set({
-          session: {
-            user: userPayload,
-            tokens: DEFAULT_SESSION.tokens,
-            role,
-          },
-          isAuthenticated: true,
-          isLoading: false,
-        });
+        // TODO: const res = await fetch("/api/v1/auth/login", { method: "POST", ... })
+        await new Promise((r) => setTimeout(r, 1200));
+        set({ session: MOCK_SESSION, isAuthenticated: true, isLoading: false });
       },
 
       logout: () => {
+        // TODO: POST /api/v1/auth/logout
         set({ session: null, isAuthenticated: false, error: null });
       },
 
-      setSession: (session) => set({ session, isAuthenticated: true }),
+      clearError: () => set({ error: null }),
     }),
     {
       name: "wadud-admin-auth",

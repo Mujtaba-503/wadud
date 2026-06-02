@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { DoctorCard } from "@/components/cards/doctor-card";
 import { MOCK_DOCTORS } from "@wadud/mocks";
-import type { Specialization } from "@wadud/types";
+import type { Specialization, LanguageCode } from "@wadud/types";
 import { SPECIALIZATION_LABELS } from "@wadud/types";
 
 const SPECIALIZATIONS = Object.entries(SPECIALIZATION_LABELS).map(([value, label]) => ({
@@ -53,7 +53,7 @@ export default function DoctorDiscoveryPage() {
       }
 
       // 3. Language Match
-      if (selectedLang !== "all" && !doctor.languages.includes(selectedLang)) {
+      if (selectedLang !== "all" && !doctor.languages.includes(selectedLang as LanguageCode)) {
         return false;
       }
 

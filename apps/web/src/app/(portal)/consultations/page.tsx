@@ -18,7 +18,7 @@ export default function ConsultationsListPage() {
   const filteredConsultations = MOCK_CONSULTATIONS.filter((c) => {
     // 1. Tab Status Filter
     if (activeTab === "upcoming") {
-      if (c.status !== "scheduled" && c.status !== "confirmed") return false;
+      if (c.status !== "pending" && c.status !== "confirmed") return false;
     } else if (activeTab === "completed") {
       if (c.status !== "completed") return false;
     } else {
@@ -88,7 +88,7 @@ export default function ConsultationsListPage() {
           filteredConsultations.map((c) => {
             const doc = MOCK_DOCTORS.find((d) => d.id === c.doctorId);
             if (!doc) return null;
-            const startTime = new Date(c.startTime);
+            const startTime = new Date(c.scheduledAt);
             const initials = `${doc.firstName[0]}${doc.lastName[0]}`;
 
             return (
@@ -108,7 +108,7 @@ export default function ConsultationsListPage() {
                         Dr. {doc.firstName} {doc.lastName}
                       </h4>
                       <Badge variant="outline" className="text-2xs capitalize">
-                        {c.type === "video" ? "Video call" : "Chat Session"}
+                        {c.consultationType === "video" ? "Video call" : "Chat Session"}
                       </Badge>
                     </div>
                     <p className="text-xs text-primary font-medium">
@@ -138,7 +138,7 @@ export default function ConsultationsListPage() {
 
                   {activeTab === "upcoming" && (
                     <div className="flex gap-2 w-full sm:w-auto">
-                      {c.type === "video" ? (
+                      {c.consultationType === "video" ? (
                         <Link href={`/video/${c.id}`} className="w-full sm:w-auto">
                           <Button size="sm" className="w-full sm:w-auto rounded-xl text-xs h-9 bg-primary text-white flex items-center gap-1">
                             <Video className="h-4 w-4" /> Start consultation

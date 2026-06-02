@@ -85,7 +85,7 @@ export default function HealthRecordsPage() {
               prescribersConsultations.map((c) => {
                 const doc = MOCK_DOCTORS.find((d) => d.id === c.doctorId);
                 if (!doc || !c.prescription) return null;
-                const slotTime = new Date(c.startTime);
+                const slotTime = new Date(c.scheduledAt);
 
                 return (
                   <div
@@ -112,7 +112,7 @@ export default function HealthRecordsPage() {
                           </span>
                         </div>
                         <p className="text-2xs text-primary font-semibold mt-1">
-                          Medicines: {c.prescription.medicines.map((m) => m.name).join(", ")}
+                          Medicines: {c.prescription.medications.map((m) => m.name).join(", ")}
                         </p>
                       </div>
                     </div>

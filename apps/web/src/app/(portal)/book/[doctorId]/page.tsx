@@ -7,7 +7,7 @@ import { ArrowLeft, Clock, Calendar, Video, MessageSquare, ShieldCheck, CreditCa
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
-import { getDoctorById } from "@wadud/mocks/src/doctors";
+import { getDoctorById } from "@wadud/mocks/doctors";
 import { formatCurrency, getSpecializationLabel } from "@/lib/utils";
 import { toast } from "sonner";
 

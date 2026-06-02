@@ -1,0 +1,125 @@
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  darkMode: ["class"],
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
+    "../../packages/ui/src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: { "2xl": "1400px" },
+    },
+    extend: {
+      colors: {
+        /* ── Wadud Brand ── */
+        primary: {
+          DEFAULT: "#0F766E",
+          50:  "#F0FDFA",
+          100: "#CCFBF1",
+          200: "#99F6E4",
+          300: "#5EEAD4",
+          400: "#2DD4BF",
+          500: "#14B8A6",
+          600: "#0D9488",
+          700: "#0F766E",
+          800: "#115E59",
+          900: "#134E4A",
+          950: "#042F2E",
+        },
+        secondary: {
+          DEFAULT: "#14B8A6",
+          foreground: "#FFFFFF",
+        },
+        accent: {
+          DEFAULT: "#22C55E",
+          50:  "#F0FDF4",
+          100: "#DCFCE7",
+          200: "#BBF7D0",
+          300: "#86EFAC",
+          400: "#4ADE80",
+          500: "#22C55E",
+          600: "#16A34A",
+          700: "#15803D",
+          800: "#166534",
+          900: "#14532D",
+        },
+        /* ── Semantic ── */
+        background: "#F8FAFC",
+        foreground: "#0F172A",
+        border: "hsl(214.3 31.8% 91.4%)",
+        input: "hsl(214.3 31.8% 91.4%)",
+        ring: "#0F766E",
+        muted: {
+          DEFAULT: "hsl(210 40% 96.1%)",
+          foreground: "hsl(215.4 16.3% 46.9%)",
+        },
+        card: {
+          DEFAULT: "#FFFFFF",
+          foreground: "#0F172A",
+        },
+        popover: {
+          DEFAULT: "#FFFFFF",
+          foreground: "#0F172A",
+        },
+        destructive: {
+          DEFAULT: "hsl(0 84.2% 60.2%)",
+          foreground: "hsl(210 40% 98%)",
+        },
+        /* ── Status ── */
+        success: { DEFAULT: "#22C55E", light: "#DCFCE7", dark: "#166534" },
+        warning: { DEFAULT: "#F59E0B", light: "#FEF3C7", dark: "#92400E" },
+        error:   { DEFAULT: "#EF4444", light: "#FEE2E2", dark: "#991B1B" },
+        info:    { DEFAULT: "#3B82F6", light: "#DBEAFE", dark: "#1E40AF" },
+      },
+      fontFamily: {
+        sans: ["Inter", "system-ui", "sans-serif"],
+        display: ["Inter", "sans-serif"],
+      },
+      borderRadius: {
+        lg: "0.75rem",
+        md: "0.5rem",
+        sm: "0.375rem",
+        xl: "1rem",
+        "2xl": "1.25rem",
+        "3xl": "1.5rem",
+      },
+      boxShadow: {
+        card:   "0 1px 3px 0 rgba(0,0,0,.05), 0 1px 2px -1px rgba(0,0,0,.05)",
+        "card-hover": "0 4px 6px -1px rgba(0,0,0,.08), 0 2px 4px -2px rgba(0,0,0,.08)",
+        glass:  "0 8px 32px 0 rgba(15,118,110,.12)",
+        glow:   "0 0 20px rgba(15,118,110,.35)",
+      },
+      keyframes: {
+        "fade-in":    { from: { opacity: "0" },               to: { opacity: "1" } },
+        "fade-up":    { from: { opacity: "0", transform: "translateY(16px)" }, to: { opacity: "1", transform: "translateY(0)" } },
+        "fade-down":  { from: { opacity: "0", transform: "translateY(-16px)" }, to: { opacity: "1", transform: "translateY(0)" } },
+        "slide-in-right": { from: { transform: "translateX(100%)" }, to: { transform: "translateX(0)" } },
+        "scale-in":   { from: { opacity: "0", transform: "scale(.95)" }, to: { opacity: "1", transform: "scale(1)" } },
+        shimmer:      { "100%": { transform: "translateX(100%)" } },
+        "pulse-ring": { "0%,100%": { opacity: "1" }, "50%": { opacity: ".5" } },
+        float:        { "0%,100%": { transform: "translateY(0px)" }, "50%": { transform: "translateY(-8px)" } },
+        "accordion-down": { from: { height: "0" }, to: { height: "var(--radix-accordion-content-height)" } },
+        "accordion-up":   { from: { height: "var(--radix-accordion-content-height)" }, to: { height: "0" } },
+      },
+      animation: {
+        "fade-in":       "fade-in .3s ease",
+        "fade-up":       "fade-up .4s ease",
+        "fade-down":     "fade-down .4s ease",
+        "slide-in-right":"slide-in-right .3s ease",
+        "scale-in":      "scale-in .2s ease",
+        shimmer:         "shimmer 1.5s infinite",
+        float:           "float 3s ease-in-out infinite",
+        "accordion-down":"accordion-down 0.2s ease-out",
+        "accordion-up":  "accordion-up 0.2s ease-out",
+      },
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "hero-gradient":   "linear-gradient(135deg, #0F766E 0%, #14B8A6 50%, #22C55E 100%)",
+        "card-gradient":   "linear-gradient(135deg, rgba(15,118,110,.08) 0%, rgba(20,184,166,.04) 100%)",
+      },
+    },
+  },
+  plugins: [require("tailwindcss-animate")],
+};
